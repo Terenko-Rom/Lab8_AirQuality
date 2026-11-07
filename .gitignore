@@ -1,0 +1,11 @@
+.vs/
+out/
+vcpkg_installed/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
