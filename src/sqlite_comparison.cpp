@@ -9,7 +9,7 @@ using namespace std;
 using namespace std::chrono;
 
 void compareSQLiteAndORM() {
-    cout << "\n12. SQLITE C API VS ORM COMPARISON" << endl;
+    cout << "\n14. SQLITE C API VS ORM COMPARISON" << endl;
 
     sqlite3* database = nullptr;
 

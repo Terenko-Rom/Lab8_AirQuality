@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "database.h"
@@ -22,6 +21,7 @@ public:
     std::vector<AirQualityIndicator> getLatest(int count);
 
     std::vector<std::tuple<int, std::string, int>> getMeasurementsWithSensorNames();
+    std::vector<std::tuple<int, int>> getCountBySensor();
 
     double getAveragePm25();
     double getMaximumPm10();
@@ -29,6 +29,7 @@ public:
 
     bool testSuccessfulTransaction();
     bool testFailedTransaction();
+    bool testOperationsWithoutTransaction();
 
     void remove(int id);
 };

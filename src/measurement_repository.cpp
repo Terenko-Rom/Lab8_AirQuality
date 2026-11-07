@@ -54,6 +54,16 @@ MeasurementRepository::getMeasurementsWithSensorNames() {
     );
 }
 
+std::vector<std::tuple<int, int>> MeasurementRepository::getCountBySensor() {
+    return storage.select(
+        columns(
+            &AirQualityIndicator::sensorId,
+            count(&AirQualityIndicator::id)
+        ),
+        group_by(&AirQualityIndicator::sensorId)
+    );
+}
+
 double MeasurementRepository::getAveragePm25() {
     return storage.avg(&AirQualityIndicator::pm25);
 }
@@ -98,6 +108,20 @@ bool MeasurementRepository::testFailedTransaction() {
         });
 
     return !transactionResult && getCount() == countBefore;
+}
+
+bool MeasurementRepository::testOperationsWithoutTransaction() {
+    int countBefore = getCount();
+
+    int insertedId = static_cast<int>(
+        storage.insert(AirQualityIndicator{
+            0, 1, storage.current_timestamp(), 9.5, 18.0, 420.0, 35
+            })
+        );
+
+    storage.remove<AirQualityIndicator>(insertedId);
+
+    return getCount() == countBefore;
 }
 
 void MeasurementRepository::remove(int id) {

@@ -1,4 +1,5 @@
-﻿#include "database.h"
+﻿
+#include "database.h"
 #include "sensor_repository.h"
 #include "measurement_repository.h"
 #include <iostream>
@@ -121,7 +122,14 @@ int main() {
         cout << "Maximum PM10: " << measurements.getMaximumPm10() << endl;
         cout << "Total measurements: " << measurements.getCount() << endl;
 
-        cout << "\n9. SENSOR CRUD OPERATIONS" << endl;
+        cout << "\n9. MEASUREMENTS COUNT BY SENSOR (GROUP BY)" << endl;
+
+        for (const auto& item : measurements.getCountBySensor()) {
+            cout << "Sensor ID: " << get<0>(item)
+                << ", Measurements: " << get<1>(item) << endl;
+        }
+
+        cout << "\n10. SENSOR CRUD OPERATIONS" << endl;
 
         int temporaryId = sensors.add(
             Sensor{ 0, "Temporary Sensor", "Test Location", "Test Model", "Active" }
@@ -141,7 +149,7 @@ int main() {
             cout << "Sensor deleted." << endl;
         }
 
-        cout << "\n10. TRANSACTION TESTS" << endl;
+        cout << "\n11. TRANSACTION TESTS" << endl;
 
         bool successfulTransaction = measurements.testSuccessfulTransaction();
         cout << "Successful transaction: "
@@ -151,7 +159,14 @@ int main() {
         cout << "Foreign key error and rollback: "
             << (failedTransaction ? "ROLLBACK SUCCESSFUL" : "ROLLBACK FAILED") << endl;
 
-        cout << "\n11. FINAL DATABASE COUNTS" << endl;
+        cout << "\n12. OPERATIONS WITHOUT EXPLICIT TRANSACTION" << endl;
+
+        bool noTransaction = measurements.testOperationsWithoutTransaction();
+
+        cout << "Insert and delete without explicit transaction: "
+            << (noTransaction ? "SUCCESSFUL" : "FAILED") << endl;
+
+        cout << "\n13. FINAL DATABASE COUNTS" << endl;
         cout << "Sensors: " << sensors.getAll().size() << endl;
         cout << "Measurements: " << measurements.getCount() << endl;
 
