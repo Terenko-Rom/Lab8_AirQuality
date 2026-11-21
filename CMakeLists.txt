@@ -1,4 +1,5 @@
-﻿cmake_minimum_required(VERSION 3.21)
+﻿
+cmake_minimum_required(VERSION 3.21)
 
 project(Lab8_AirQuality LANGUAGES CXX)
 
@@ -18,11 +19,20 @@ add_executable(Lab8_AirQuality
     include/database.h
     include/sensor_repository.h
     include/measurement_repository.h
+    include/measurement_state.h
     src/database.cpp
     src/sensor_repository.cpp
     src/measurement_repository.cpp
+    src/measurement_state.cpp
     src/sqlite_comparison.cpp
-)
+    include/state_demo.h
+    src/state_demo.cpp
+    src/air_quality_strategy.cpp
+    include/air_quality_strategy.h
+    src/air_quality_observer.cpp
+    src/air_quality_facade.cpp
+ "include/state_demo.h" "src/state_demo.cpp" "include/air_quality_strategy.h" "src/air_quality_strategy.cpp" "include/air_quality_observer.h" "src/air_quality_observer.cpp" "include/air_quality_facade.h" "src/air_quality_facade.cpp")
+
 
 target_include_directories(Lab8_AirQuality PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/include"

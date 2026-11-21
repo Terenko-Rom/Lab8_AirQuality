@@ -30,7 +30,19 @@ inline auto createStorage(const std::string& path) {
             make_column("pm10", &AirQualityIndicator::pm10),
             make_column("co2", &AirQualityIndicator::co2),
             make_column("aqi", &AirQualityIndicator::aqi),
+            make_column("state", &AirQualityIndicator::state),
             foreign_key(&AirQualityIndicator::sensorId).references(&Sensor::id)
+        ),
+
+        make_table(
+            "measurement_state_history",
+            make_column("id", &MeasurementStateHistory::id, primary_key().autoincrement()),
+            make_column("measurement_id", &MeasurementStateHistory::measurementId),
+            make_column("previous_state", &MeasurementStateHistory::previousState),
+            make_column("new_state", &MeasurementStateHistory::newState),
+            make_column("changed_at", &MeasurementStateHistory::changedAt),
+            foreign_key(&MeasurementStateHistory::measurementId)
+            .references(&AirQualityIndicator::id)
         )
     );
 }

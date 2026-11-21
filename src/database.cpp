@@ -11,6 +11,13 @@ void initializeDatabase() {
 
     storage.sync_schema();
 
+    for (auto measurement : storage.get_all<AirQualityIndicator>()) {
+        if (measurement.state.empty()) {
+            measurement.state = "Отриманий";
+            storage.update(measurement);
+        }
+    }
+
     if (storage.count<Sensor>() == 0) {
         storage.insert(Sensor{ 0, "Sensor A", "Kyiv, Center", "AirMonitor X1", "Active" });
         storage.insert(Sensor{ 0, "Sensor B", "Kyiv, Podil", "AirMonitor X2", "Active" });

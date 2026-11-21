@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <string>
@@ -18,4 +19,13 @@ struct AirQualityIndicator {
     double pm10;
     double co2;
     int aqi;
+    std::string state = "Отриманий";
+};
+
+struct MeasurementStateHistory {
+    int id;
+    int measurementId;
+    std::string previousState;
+    std::string newState;
+    std::string changedAt;
 };
